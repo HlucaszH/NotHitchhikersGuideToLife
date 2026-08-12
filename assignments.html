@@ -7,9 +7,35 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!--
+        HOW THIS PAGE WORKS (no backend, no database — read this before editing)
+        ===========================================================================
+        Everything here runs in the student's own browser. Nothing gets sent
+        to you automatically — there's no server to receive it.
+
+        ASSIGNMENT 1 (True/False):
+        Pure JS check, purely for instant feedback. Answers live in the
+        `data-correct="true|false"` attribute on each .tf-item. Clicking
+        "Check Answers" compares selections to those attributes and opens
+        the modal at the bottom of the page — the "wrong answer" messages
+        are the SARCASTIC_LINES array in the <script>, edit freely.
+        Nothing here is emailed anywhere; it's just a comprehension gate.
+
+        ASSIGNMENT 2 (Placement test, A1–C2):
+        Since there's no backend, you can't see what a student typed until
+        they send it to you. So instead: the student fills in the textareas,
+        then hits "Download as PDF" — that button just calls window.print()
+        with a print stylesheet (see the @media print block in styles.css)
+        that hides the nav/buttons and prints only the filled-in test.
+        Their browser's print dialog lets them pick "Save as PDF" as the
+        destination — that's the actual PDF, no library needed. They attach
+        that PDF to an email to you. Scoring (max 5 pts/level) is done by
+        you by hand — there's a blank "Score ___ / 5" line under each task
+        for exactly that.
+    -->
     <header>
         <nav>
-            <div class="logo">English Lessons<span class="dot">.</span></div>
+            <div class="logo">NotHitchhikersGuideToLife<span class="dot">.</span></div>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="lessons.html">Lessons</a></li>
@@ -19,58 +45,207 @@
     </header>
 
     <div class="container">
-        <span class="page-kicker">Practice</span>
-        <h1 class="page-title">Exercises &amp; homework</h1>
-        <p class="page-lede">Short exercises to check what you've learned, and homework to keep it fresh between lessons.</p>
+        <span class="page-kicker">Assignments</span>
+        <h1 class="page-title">Assignments</h1>
+        <p class="page-lede">Two to start with: prove you actually read how this works, then let's find out where you really stand.</p>
 
-        <div class="section">
-            <h2>Exercises</h2>
-            <p class="section-sub">Quick practice, marked in class or self-checked</p>
+        <!-- ===================== ASSIGNMENT 1 — TRUE/FALSE ===================== -->
+        <!-- class="no-print" here: this quiz is just an instant-feedback gate,
+             it's never emailed, so it has no business showing up in the
+             Assignment 2 PDF. See the @media print block in styles.css. -->
+        <div class="section no-print">
+            <h2>Assignment 1: Did You Actually Read the Rules?</h2>
+            <p class="section-sub">True or false. Answer honestly — get one wrong and you'll hear about it.</p>
 
-            <div class="exercise-item">
-                <h3>Exercise 1: Fill in the Blanks</h3>
-                <p>Complete the sentences using the present continuous tense.</p>
-                <button class="btn">View Exercise</button>
+            <div class="lesson-item tf-item" data-correct="true">
+                <p>1. If you don't understand something, you should just email or message me and ask.</p>
+                <div class="tf-toggle">
+                    <span class="tf-option"><input type="radio" name="q1" id="q1-true" value="true"><label for="q1-true">True</label></span>
+                    <span class="tf-option"><input type="radio" name="q1" id="q1-false" value="false"><label for="q1-false">False</label></span>
+                </div>
             </div>
-            <div class="exercise-item">
-                <h3>Exercise 2: Grammar Quiz</h3>
-                <p>Test your knowledge of past simple irregular verbs.</p>
-                <button class="btn">View Exercise</button>
+
+            <div class="lesson-item tf-item" data-correct="false">
+                <p>2. Homework is optional if you're busy that week.</p>
+                <div class="tf-toggle">
+                    <span class="tf-option"><input type="radio" name="q2" id="q2-true" value="true"><label for="q2-true">True</label></span>
+                    <span class="tf-option"><input type="radio" name="q2" id="q2-false" value="false"><label for="q2-false">False</label></span>
+                </div>
             </div>
-            <div class="exercise-item">
-                <h3>Exercise 3: Vocabulary Match</h3>
-                <p>Match words with their correct definitions.</p>
-                <button class="btn">View Exercise</button>
+
+            <div class="lesson-item tf-item" data-correct="true">
+                <p>3. I'll review your homework and reply, sometimes as a note posted under the assignment itself.</p>
+                <div class="tf-toggle">
+                    <span class="tf-option"><input type="radio" name="q3" id="q3-true" value="true"><label for="q3-true">True</label></span>
+                    <span class="tf-option"><input type="radio" name="q3" id="q3-false" value="false"><label for="q3-false">False</label></span>
+                </div>
             </div>
+
+            <div class="lesson-item tf-item" data-correct="false">
+                <p>4. This page saves your homework automatically, so you don't need to send it anywhere.</p>
+                <div class="tf-toggle">
+                    <span class="tf-option"><input type="radio" name="q4" id="q4-true" value="true"><label for="q4-true">True</label></span>
+                    <span class="tf-option"><input type="radio" name="q4" id="q4-false" value="false"><label for="q4-false">False</label></span>
+                </div>
+            </div>
+
+            <div class="lesson-item tf-item" data-correct="false">
+                <p>5. The readings on the Lessons page are just for fun and have nothing to do with your assignments.</p>
+                <div class="tf-toggle">
+                    <span class="tf-option"><input type="radio" name="q5" id="q5-true" value="true"><label for="q5-true">True</label></span>
+                    <span class="tf-option"><input type="radio" name="q5" id="q5-false" value="false"><label for="q5-false">False</label></span>
+                </div>
+            </div>
+
+            <button class="btn" id="checkAnswers" style="margin-top:8px;">Check Answers</button>
         </div>
 
+        <!-- ===================== ASSIGNMENT 2 — PLACEMENT TEST ===================== -->
         <div class="section">
-            <h2>Homework</h2>
-            <p class="section-sub"><span class="tag due">Due next week</span></p>
+            <h2>Assignment 2: Placement Test (A1–C2)</h2>
+            <p class="section-sub">One task per level, 5 points max each. I can't see this live — fill it in, then hit "Download as PDF" at the bottom and email me the file.</p>
+
+            <div class="field-row no-print">
+                <div class="field">
+                    <label for="studentName">Your name</label>
+                    <input type="text" id="studentName" placeholder="e.g. Kasia">
+                </div>
+                <div class="field">
+                    <label for="studentEmail">Your email (so I know who sent it)</label>
+                    <input type="email" id="studentEmail" placeholder="you@example.com">
+                </div>
+            </div>
 
             <div class="homework-item">
-                <h3>Assignment 1: Daily Activities</h3>
-                <p>Write 10 sentences using the present continuous tense about your daily activities.</p>
-                <button class="btn btn-secondary">Download PDF</button>
-                <button class="btn btn-secondary">Submit</button>
+                <span class="tag level">Level A1</span>
+                <h3>Task 1: Basics</h3>
+                <p>Complete the sentences: "My name ___ Anna. I ___ 20 years old. My favourite colour ___ blue."</p>
+                <textarea class="task-answer" rows="2" placeholder="Write your answer here…"></textarea>
+                <p class="score-line">Score _____ / 5 (teacher use)</p>
             </div>
+
             <div class="homework-item">
-                <h3>Assignment 2: Past Simple Workbook</h3>
-                <p>Complete the grammar exercises on past simple tense (pages 1–3 in your workbook).</p>
-                <button class="btn btn-secondary">Download PDF</button>
-                <button class="btn btn-secondary">Submit</button>
+                <span class="tag level">Level A2</span>
+                <h3>Task 2: Your Day</h3>
+                <p>Write 3–4 sentences about what you did yesterday.</p>
+                <textarea class="task-answer" rows="3" placeholder="Write your answer here…"></textarea>
+                <p class="score-line">Score _____ / 5 (teacher use)</p>
             </div>
+
             <div class="homework-item">
-                <h3>Assignment 3: Weekend Recording</h3>
-                <p>Record a 2-minute audio where you describe your weekend using learned vocabulary.</p>
-                <button class="btn btn-secondary">Download Instructions</button>
-                <button class="btn btn-secondary">Submit</button>
+                <span class="tag level">Level B1</span>
+                <h3>Task 3: Experience vs. Event</h3>
+                <p>Write two sentences: one using present perfect ("I have ever…") and one using past simple, about the same topic.</p>
+                <textarea class="task-answer" rows="3" placeholder="Write your answer here…"></textarea>
+                <p class="score-line">Score _____ / 5 (teacher use)</p>
             </div>
+
+            <div class="homework-item">
+                <span class="tag level">Level B2</span>
+                <h3>Task 4: Short Opinion</h3>
+                <p>In 4–5 sentences, give your opinion on something you've watched, read, or listened to recently. Use at least one linking word (however, because, although…).</p>
+                <textarea class="task-answer" rows="4" placeholder="Write your answer here…"></textarea>
+                <p class="score-line">Score _____ / 5 (teacher use)</p>
+            </div>
+
+            <div class="homework-item">
+                <span class="tag level">Level C1</span>
+                <h3>Task 5: Rephrase It</h3>
+                <p>Rewrite this sentence in a more formal way: "This thing you sent me doesn't really work, can you fix it?"</p>
+                <textarea class="task-answer" rows="2" placeholder="Write your answer here…"></textarea>
+                <p class="score-line">Score _____ / 5 (teacher use)</p>
+            </div>
+
+            <div class="homework-item">
+                <span class="tag level">Level C2</span>
+                <h3>Task 6: Make Your Case</h3>
+                <p>In about 100 words, argue for or against this statement: "Learning a language from a textbook is a waste of time." Use natural, idiomatic English.</p>
+                <textarea class="task-answer" rows="6" placeholder="Write your answer here…"></textarea>
+                <p class="score-line">Score _____ / 5 (teacher use)</p>
+            </div>
+
+            <button class="btn no-print" id="downloadPdf" style="margin-top:8px;">Download as PDF</button>
+            <p class="section-sub no-print" style="margin-top:10px; margin-bottom:0;">This opens your browser's print dialog — choose "Save as PDF" as the destination, then email the file to me.</p>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 English Lessons<span class="dot">.</span> All rights reserved.</p>
+        <p>&copy; 2026 NotHitchhikersGuideToLife<span class="dot">.</span> All rights reserved(?)(idk how to do that lmao).</p>
     </footer>
+
+    <!-- Result modal for Assignment 1 -->
+    <div class="modal-overlay" id="resultModal">
+        <div class="modal-card" id="resultCard">
+            <h3 id="resultTitle">Result</h3>
+            <p id="resultText">Message goes here.</p>
+            <button class="btn" id="closeModal">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // ---- Assignment 1: True/False check ----
+        const SARCASTIC_LINES = [
+            "bruh. Read it again.",
+            "That's a bold guess. A wrong one, but bold.",
+            "Close your eyes and try to remember what you just read.",
+            "Nope. The rules didn't change since you read them ten seconds ago.",
+            "I'm not mad, I'm just going to make you read it again."
+        ];
+
+        const GOOD_LINES = [
+            "Look at that. You can follow instructions.",
+            "Perfect score. On to the actual test.",
+            "Nice — you were paying attention after all."
+        ];
+
+        document.getElementById('checkAnswers').addEventListener('click', () => {
+            const items = document.querySelectorAll('.tf-item');
+            let allAnswered = true;
+            let allCorrect = true;
+
+            items.forEach(item => {
+                const correct = item.dataset.correct;
+                const selected = item.querySelector('input[type="radio"]:checked');
+                if (!selected) { allAnswered = false; return; }
+                if (selected.value !== correct) { allCorrect = false; }
+            });
+
+            const modal = document.getElementById('resultModal');
+            const card = document.getElementById('resultCard');
+            const title = document.getElementById('resultTitle');
+            const text = document.getElementById('resultText');
+
+            card.classList.remove('good');
+
+            if (!allAnswered) {
+                title.textContent = "Hold on";
+                text.textContent = "You didn't answer all five. Go back and finish the quiz.";
+            } else if (allCorrect) {
+                title.textContent = "Correct.";
+                text.textContent = GOOD_LINES[Math.floor(Math.random() * GOOD_LINES.length)];
+                card.classList.add('good');
+            } else {
+                title.textContent = "Wrong.";
+                text.textContent = SARCASTIC_LINES[Math.floor(Math.random() * SARCASTIC_LINES.length)];
+            }
+
+            modal.classList.add('open');
+        });
+
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('resultModal').classList.remove('open');
+        });
+
+        document.getElementById('resultModal').addEventListener('click', (e) => {
+            if (e.target.id === 'resultModal') {
+                e.currentTarget.classList.remove('open');
+            }
+        });
+
+        // ---- Assignment 2: Download as PDF (browser print) ----
+        document.getElementById('downloadPdf').addEventListener('click', () => {
+            window.print();
+        });
+    </script>
 </body>
 </html>
