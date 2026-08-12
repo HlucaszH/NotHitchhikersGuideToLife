@@ -1,0 +1,398 @@
+/* =========================================================
+   English Lessons — "Workbook" design system
+   Palette:
+     --paper       #F1E8D8  page background (aged paper beige)
+     --paper-card  #FBF6EC  card surface (fresh paper)
+     --ink         #2E2A24  primary text (ink)
+     --ink-soft    #6B6255  secondary text (faded pencil)
+     --rule        #D8C9AA  rule lines / borders (tan)
+     --pen         #8A3324  red-pen accent (corrections, active state)
+     --pen-soft    #F1DAD2  pale red-pen wash
+     --moss        #5C6B4F  moss green (done / progress)
+   Type:
+     display  "Lora"            — headings, textbook serif
+     body     "Inter"           — running text
+     utility  "JetBrains Mono"  — labels, margin notes, tabs
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --paper: #F1E8D8;
+    --paper-card: #FBF6EC;
+    --ink: #2E2A24;
+    --ink-soft: #6B6255;
+    --rule: #D8C9AA;
+    --pen: #8A3324;
+    --pen-soft: #F1DAD2;
+    --moss: #5C6B4F;
+    --moss-soft: #E3E9DA;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    /* faint ruled-paper texture */
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 35px,
+        rgba(138, 51, 36, 0.055) 35px,
+        rgba(138, 51, 36, 0.055) 36px
+    );
+}
+
+a { color: inherit; }
+
+.utility {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* ---------- Header / tab navigation ---------- */
+
+header {
+    background: var(--paper);
+    border-bottom: 2px solid var(--ink);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    padding: 18px 24px 0;
+    gap: 14px;
+}
+
+.logo {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--ink);
+    padding-bottom: 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.logo .dot { color: var(--pen); }
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    display: inline-block;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 10px 16px;
+    border: 2px solid var(--ink);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    background: var(--rule);
+    transform: translateY(2px);
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+nav a:hover {
+    transform: translateY(0);
+    color: var(--ink);
+}
+
+nav a:focus-visible {
+    outline: 2px solid var(--pen);
+    outline-offset: 2px;
+}
+
+nav a.active {
+    background: var(--paper-card);
+    color: var(--pen);
+    transform: translateY(0);
+    box-shadow: 0 -2px 0 var(--paper-card);
+}
+
+/* ---------- Layout ---------- */
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 24px;
+}
+
+.page-title {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: clamp(32px, 5vw, 48px);
+    margin-bottom: 8px;
+}
+
+.page-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pen);
+    margin-bottom: 6px;
+    display: block;
+}
+
+.page-lede {
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin-bottom: 36px;
+    font-size: 17px;
+}
+
+.section {
+    background: var(--paper-card);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 28px 30px;
+    margin: 0 0 28px;
+    box-shadow: 4px 4px 0 var(--rule);
+}
+
+.section h2 {
+    font-family: 'Lora', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: inline-block;
+    position: relative;
+}
+
+/* handwriting-practice underline — the signature motif */
+.section h2::after {
+    content: "";
+    display: block;
+    height: 6px;
+    margin-top: 6px;
+    background-image: repeating-linear-gradient(
+        to right,
+        var(--pen) 0,
+        var(--pen) 6px,
+        transparent 6px,
+        transparent 12px
+    );
+}
+
+.section-sub {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.section h3 {
+    font-family: 'Lora', serif;
+    color: var(--ink);
+    margin-top: 4px;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+/* ---------- Item cards ---------- */
+
+.lesson-item, .exercise-item, .homework-item {
+    background: var(--paper);
+    padding: 16px 18px;
+    margin: 12px 0;
+    border-left: 4px solid var(--ink);
+    border-radius: 4px;
+}
+
+.homework-item { border-left-color: var(--pen); background: var(--pen-soft); }
+.exercise-item { border-left-color: var(--moss); background: var(--moss-soft); }
+
+.homework-item p, .exercise-item p, .lesson-item p { color: var(--ink-soft); font-size: 15px; }
+
+.tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1.5px solid var(--ink);
+    margin-bottom: 8px;
+}
+
+.tag.due { border-color: var(--pen); color: var(--pen); }
+.tag.level { border-color: var(--moss); color: var(--moss); }
+
+/* ---------- Buttons ---------- */
+
+.btn {
+    background-color: var(--ink);
+    color: var(--paper-card);
+    padding: 10px 18px;
+    border: 2px solid var(--ink);
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    margin: 4px 6px 0 0;
+}
+
+.btn:hover { background-color: var(--pen); border-color: var(--pen); }
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--ink);
+}
+
+.btn-secondary:hover {
+    background-color: var(--ink);
+    color: var(--paper-card);
+}
+
+.btn:focus-visible, a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--pen);
+    outline-offset: 2px;
+}
+
+/* ---------- Home page specifics ---------- */
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+    align-items: start;
+    margin-bottom: 8px;
+}
+
+.hero-note {
+    background: var(--paper-card);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 22px 24px;
+    box-shadow: 4px 4px 0 var(--rule);
+    position: relative;
+}
+
+.hero-note::before {
+    content: "margin note";
+    position: absolute;
+    top: -11px;
+    left: 18px;
+    background: var(--paper);
+    padding: 0 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--pen);
+}
+
+.contact-list {
+    list-style: none;
+    margin-top: 12px;
+}
+
+.contact-list li {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--rule);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 15px;
+}
+
+.contact-list li:last-child { border-bottom: none; }
+
+.contact-list .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+}
+
+.stat-row {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.stat {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.stat .num {
+    font-family: 'Lora', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--pen);
+    display: block;
+}
+
+.stat .label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; }
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+    background-color: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 26px 20px;
+    margin-top: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+}
+
+footer .dot { color: var(--pen); }
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 768px) {
+    .section { padding: 20px; }
+    .container { padding: 28px 16px 16px; }
+    nav { padding: 14px 16px 0; }
+}
+
+@media (max-width: 480px) {
+    nav { flex-direction: column; align-items: flex-start; }
+    nav ul { gap: 2px; }
+    .logo { padding-bottom: 10px; }
+}
