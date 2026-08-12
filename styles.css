@@ -1,5 +1,5 @@
 /* =========================================================
-   NotHitchhikersGuideToLife — "Workbook" design system
+   English Lessons — "Workbook" design system
    Palette:
      --paper       #F1E8D8  page background (aged paper beige)
      --paper-card  #FBF6EC  card surface (fresh paper)
@@ -273,6 +273,20 @@ nav a.active {
     outline: 2px solid var(--pen);
     outline-offset: 2px;
 }
+
+/* "Open Lesson" button once the lesson has no page written yet.
+   Same markup/class as a real .btn link, just not clickable —
+   see the comments in lessons.html for how to switch this
+   back into a working link once the page exists. */
+.btn.disabled {
+    background-color: transparent;
+    color: var(--ink-soft);
+    border-color: var(--rule);
+    cursor: default;
+    pointer-events: none;
+}
+
+.btn.disabled:hover { background-color: transparent; }
 
 /* ---------- Home page specifics ---------- */
 

@@ -7,9 +7,38 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!--
+        HOW "OPEN LESSON" BUTTONS WORK
+        ===============================
+        These are plain HTML pages, so a lesson only becomes clickable once
+        its own .html file exists. There's no database or lesson system —
+        each lesson is just another page like intro.html, linked from here.
+
+        1) WORKING lesson (page exists):
+           Use a real <a> tag styled as a button, pointing at that lesson's file:
+
+               <a class="btn" href="intro.html">Open Lesson</a>
+
+           That's it — .btn is a CSS class in styles.css, it doesn't care if
+           it's on a <button> or an <a>. Using <a> instead of <button> is what
+           actually makes it navigate somewhere.
+
+        2) NOT-YET-WRITTEN lesson (no page yet):
+           Use the same look but make it inert, so nobody clicks into a 404:
+
+               <span class="btn disabled" aria-disabled="true">Coming soon</span>
+
+           When you actually write that lesson's page, just:
+             a. copy intro.html as a starting template,
+             b. rename it (e.g. grammar-1.html) and fill in the content,
+             c. swap the <span class="btn disabled">…</span> above it for
+                the real <a class="btn" href="grammar-1.html">Open Lesson</a>.
+
+        That's the whole system — no build step, no JS required.
+    -->
     <header>
         <nav>
-            <div class="logo">English Lessons<span class="dot">.</span></div>
+            <div class="logo">NotHitchhikersGuideToLife<span class="dot">.</span></div>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="lessons.html" class="active">Lessons</a></li>
@@ -21,65 +50,68 @@
     <div class="container">
         <span class="page-kicker">Curriculum</span>
         <h1 class="page-title">Lessons &amp; lectures</h1>
-        <p class="page-lede">Grammar, vocabulary, and conversation practice, organized so you always know what's next.</p>
+        <p class="page-lede">Start with the introduction, then the grammar you can't skip, then the rants — read those, and the open-ended assignments on the Assignments page will make a lot more sense.</p>
 
+        <!-- ===================== INTRO ===================== -->
+        <div class="section">
+            <h2>Introduction</h2>
+            <p class="section-sub">Read this one first — it's the "note from the author" bit every book has and nobody reads. Read it anyway.</p>
+
+            <div class="lesson-item">
+                <span class="tag level">Start here</span>
+                <h3>Lesson 1: Introduction</h3>
+                <p>Why this exists, how it's going to work, and what I expect from you. Five minutes, no grammar, no excuses.</p>
+                <br><a class="btn" href="intro.html">Open Lesson</a>
+            </div>
+        </div>
+
+        <!-- ===================== GRAMMAR ===================== -->
         <div class="section">
             <h2>Grammar</h2>
-            <p class="section-sub">Core structures, explained and practiced</p>
+            <p class="section-sub">The theory. Boring but necessary — get through these before the rants below.</p>
 
             <div class="lesson-item">
-                <span class="tag level">Level A2</span>
-                <h3>Lesson 1: Present Continuous Tense</h3>
-                <p>How to form the present continuous and when to use it for actions happening now and near-future plans.</p>
-                <button class="btn">Open Lesson</button>
+                <span class="tag level">Level TBD</span>
+                <h3>Lesson 2: [grammar topic 1]</h3>
+                <p>Placeholder — fill in what you actually want to cover first.</p>
+                <br><span class="btn disabled" aria-disabled="true">Coming soon</span>
             </div>
             <div class="lesson-item">
-                <span class="tag level">Level A2</span>
-                <h3>Lesson 2: Past Simple Tense</h3>
-                <p>Regular and irregular verbs in the past simple, with common mistakes to watch for.</p>
-                <button class="btn">Open Lesson</button>
+                <span class="tag level">Level TBD</span>
+                <h3>Lesson 3: [grammar topic 2]</h3>
+                <p>Placeholder — fill in what you actually want to cover second.</p>
+                <br><span class="btn disabled" aria-disabled="true">Coming soon</span>
             </div>
             <div class="lesson-item">
-                <span class="tag level">Level B1</span>
-                <h3>Lesson 3: Present Perfect vs. Past Simple</h3>
-                <p>Telling the two tenses apart — one of the trickiest points for Polish speakers of English.</p>
-                <button class="btn">Open Lesson</button>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>Vocabulary</h2>
-            <p class="section-sub">Words and phrases by topic</p>
-
-            <div class="lesson-item">
-                <span class="tag level">Level B1</span>
-                <h3>Lesson 4: Business English Vocabulary</h3>
-                <p>Everyday phrases for meetings, emails, and small talk at work.</p>
-                <button class="btn">Open Lesson</button>
-            </div>
-            <div class="lesson-item">
-                <span class="tag level">Level A2</span>
-                <h3>Lesson 5: Everyday Phrasal Verbs</h3>
-                <p>The twenty phrasal verbs you'll actually hear in daily conversation.</p>
-                <button class="btn">Open Lesson</button>
+                <span class="tag level">Level TBD</span>
+                <h3>Lesson 4: [grammar topic 3]</h3>
+                <p>Placeholder — fill in what you actually want to cover third.</p>
+                <br><span class="btn disabled" aria-disabled="true">Coming soon</span>
             </div>
         </div>
 
+        <!-- ===================== READINGS / RANTS ===================== -->
         <div class="section">
-            <h2>Speaking &amp; listening</h2>
-            <p class="section-sub">Practice for real conversations</p>
+            <h2>Readings</h2>
+            <p class="section-sub">Me going off about a situation, an opinion, or a type of person — the open-ended writing assignments on the Assignments page are based on these, so read before you write.</p>
 
             <div class="lesson-item">
-                <span class="tag level">Level B2</span>
-                <h3>Lesson 6: Small Talk &amp; Networking</h3>
-                <p>Starting, holding, and ending conversations naturally at work or social events.</p>
-                <button class="btn">Open Lesson</button>
+                <span class="tag level">Reading</span>
+                <h3>Reading 1: [title]</h3>
+                <p>Placeholder — first rant goes here.</p>
+                <br><span class="btn disabled" aria-disabled="true">Coming soon</span>
+            </div>
+            <div class="lesson-item">
+                <span class="tag level">Reading</span>
+                <h3>Reading 2: [title]</h3>
+                <p>Placeholder — second rant goes here.</p>
+                <br><span class="btn disabled" aria-disabled="true">Coming soon</span>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 English Lessons<span class="dot">.</span> All rights reserved.</p>
+        <p>&copy; 2026 NotHitchhikersGuideToLife<span class="dot">.</span> All rights reserved(?)(idk how to do that lmao).</p>
     </footer>
 </body>
 </html>
