@@ -265,7 +265,11 @@
                     .forEach(s => s.classList.remove('print-target'));
                 target.classList.add('print-target');
                 document.body.classList.add('print-mode');
-                window.print();
+                // Force the browser to recalculate styles before printing —
+                // without this, some browsers can still be mid-repaint when
+                // window.print() fires and end up printing the old layout.
+                void document.body.offsetHeight;
+                setTimeout(() => window.print(), 50);
             });
         });
 
