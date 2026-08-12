@@ -24,14 +24,27 @@
         ASSIGNMENT 2 (Placement test, A1–C2):
         Since there's no backend, you can't see what a student typed until
         they send it to you. So instead: the student fills in the textareas,
-        then hits "Download as PDF" — that button just calls window.print()
-        with a print stylesheet (see the @media print block in styles.css)
-        that hides the nav/buttons and prints only the filled-in test.
+        then hits "Download as PDF" — that button just calls window.print().
         Their browser's print dialog lets them pick "Save as PDF" as the
-        destination — that's the actual PDF, no library needed. They attach
-        that PDF to an email to you. Scoring (max 5 pts/level) is done by
-        you by hand — there's a blank "Score ___ / 5" line under each task
-        for exactly that.
+        destination — that's the actual PDF, no library needed.
+
+        SCOPED PRINTING — no manual tagging needed for new assignments:
+        Every "Download as PDF" button has a `data-download-pdf` attribute.
+        A single delegated click handler (bottom of this file) finds the
+        .section that button lives in, marks ONLY that section with a
+        `print-target` class, adds `print-mode` to <body>, then calls
+        window.print(). The CSS in styles.css (@media print) hides every
+        other direct child of .container automatically. So: to add
+        Assignment 3 later, just build a new `<div class="section">…</div>`
+        with its own textareas and a button like
+            <button class="btn no-print" data-download-pdf>Download as PDF</button>
+        — printing scopes itself to that section with zero extra classes.
+
+        AUTO-GROWING ANSWER BOXES:
+        Every <textarea class="task-answer"> resizes itself as the student
+        types (see the `autoGrow` script at the bottom) — no fixed `rows`
+        needed, no scrollbars, no manual work per textarea. Just give any
+        new answer box the same `task-answer` class and it's handled.
     -->
     <header>
         <nav>
@@ -50,12 +63,9 @@
         <p class="page-lede">Two to start with: prove you actually read how this works, then let's find out where you really stand.</p>
 
         <!-- ===================== ASSIGNMENT 1 — TRUE/FALSE ===================== -->
-        <!-- class="no-print" here: this quiz is just an instant-feedback gate,
-             it's never emailed, so it has no business showing up in the
-             Assignment 2 PDF. See the @media print block in styles.css. -->
-        <div class="section no-print">
+        <div class="section">
             <h2>Assignment 1: Did You Actually Read the Rules?</h2>
-            <p class="section-sub">True or false. Answer honestly — get one wrong and you'll hear about it.</p>
+            <p class="section-sub">True or false. Answer honestly — get one wrong and you'll hear about it. (This one has no download button — it's not something you submit.)</p>
 
             <div class="lesson-item tf-item" data-correct="true">
                 <p>1. If you don't understand something, you should just email or message me and ask.</p>
@@ -105,7 +115,7 @@
             <h2>Assignment 2: Placement Test (A1–C2)</h2>
             <p class="section-sub">One task per level, 5 points max each. I can't see this live — fill it in, then hit "Download as PDF" at the bottom and email me the file.</p>
 
-            <div class="field-row no-print">
+            <div class="field-row">
                 <div class="field">
                     <label for="studentName">Your name</label>
                     <input type="text" id="studentName" placeholder="e.g. Kasia">
@@ -164,7 +174,7 @@
                 <p class="score-line">Score _____ / 5 (teacher use)</p>
             </div>
 
-            <button class="btn no-print" id="downloadPdf" style="margin-top:8px;">Download as PDF</button>
+            <button class="btn no-print" data-download-pdf style="margin-top:8px;">Download as PDF</button>
             <p class="section-sub no-print" style="margin-top:10px; margin-bottom:0;">This opens your browser's print dialog — choose "Save as PDF" as the destination, then email the file to me.</p>
         </div>
     </div>
@@ -242,9 +252,47 @@
             }
         });
 
-        // ---- Assignment 2: Download as PDF (browser print) ----
-        document.getElementById('downloadPdf').addEventListener('click', () => {
-            window.print();
+        // ---- Any "Download as PDF" button, on any current or future assignment ----
+        // Finds the .section the clicked button lives in, marks ONLY that
+        // section printable, then opens the print dialog. No per-assignment
+        // wiring needed — just give a new button the `data-download-pdf`
+        // attribute and put it inside that assignment's .section.
+        document.querySelectorAll('[data-download-pdf]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.closest('.section');
+                if (!target) return;
+                document.querySelectorAll('.section.print-target')
+                    .forEach(s => s.classList.remove('print-target'));
+                target.classList.add('print-target');
+                document.body.classList.add('print-mode');
+                window.print();
+            });
+        });
+
+        // Clean up the scoped-print classes once the print dialog closes,
+        // so the page looks normal again and the next download works fresh.
+        window.addEventListener('afterprint', () => {
+            document.body.classList.remove('print-mode');
+            document.querySelectorAll('.section.print-target')
+                .forEach(s => s.classList.remove('print-target'));
+        });
+
+        // ---- Auto-growing answer boxes ----
+        // Any <textarea class="task-answer"> resizes itself to fit its
+        // content as the student types. Works for textareas added later
+        // too, since it's delegated + also runs once on load for any
+        // pre-filled text.
+        function autoGrow(el) {
+            el.style.height = 'auto';
+            el.style.height = el.scrollHeight + 'px';
+        }
+
+        document.querySelectorAll('.task-answer').forEach(autoGrow);
+
+        document.addEventListener('input', (e) => {
+            if (e.target.classList.contains('task-answer')) {
+                autoGrow(e.target);
+            }
         });
     </script>
 </body>

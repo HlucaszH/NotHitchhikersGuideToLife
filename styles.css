@@ -535,7 +535,8 @@ textarea:focus-visible {
     border-radius: 5px;
     background: var(--paper);
     color: var(--ink);
-    resize: vertical;
+    resize: none;           /* height is now handled by JS, see the auto-grow script */
+    overflow: hidden;       /* no scrollbar while it grows */
     min-height: 70px;
     margin-top: 10px;
 }
@@ -549,18 +550,32 @@ textarea:focus-visible {
     letter-spacing: 0.05em;
 }
 
-/* ---------- Print (used by the "Download as PDF" button) ---------- */
+/* ---------- Print (used by the "Download as PDF" buttons) ----------
+   Scoped-print system: by default, printing any page only ever shows
+   the ONE .section that owns the button that was clicked — see the
+   `data-download-pdf` script at the bottom of assignments.html for how
+   a section gets marked `.print-target`. This means a brand-new
+   assignment added later needs ZERO manual "no-print" tagging: as long
+   as its download button lives inside a .section and carries the
+   `data-download-pdf` attribute, only that section will ever print. */
 
 @media print {
     header, footer, .btn, .no-print { display: none !important; }
     body { background: #fff; }
-    .section {
-        box-shadow: none;
-        border: 1px solid #999;
-        break-inside: avoid;
-    }
     .container { padding: 0; max-width: 100%; }
     a[href]::after { content: ""; }
+
+    /* hide everything in the page by default... */
+    body.print-mode .container > * { display: none !important; }
+    /* ...except the one section that was actually asked for */
+    body.print-mode .container > .print-target {
+        display: block !important;
+        box-shadow: none;
+        border: 1px solid #999;
+    }
+    /* non-scoped prints (no JS / print-mode never set) still fall back
+       to "hide every .section", so nothing prints by accident */
+    .section { box-shadow: none; border: 1px solid #999; break-inside: avoid; }
 }
 
 /* ---------- Reduced motion ---------- */
